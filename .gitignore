@@ -1,0 +1,19 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/ApiVotos/AccesoDatos/bin/Debug/net5.0
+/ApiVotos/AccesoDatos/obj/Debug/net5.0
+/ApiVotos/AccesoDatos/obj
+/ApiVotos/ApiVotos/bin/Debug/net5.0
+/ApiVotos/ApiVotos/obj/Debug/net5.0
+/ApiVotos/ApiVotos/obj
+/ApiVotos/Modelos/bin/Debug/net5.0
+/ApiVotos/Modelos/obj/Debug/net5.0
+/ApiVotos/Modelos/obj
+/ApiVotos/Negocio/bin/Debug/net5.0
+/ApiVotos/Negocio/obj/Debug/net5.0
+/ApiVotos/Negocio/obj
+/ApiVotos/Singleton/bin/Debug/net5.0
+/ApiVotos/Singleton/obj/Debug/net5.0
+/ApiVotos/Singleton/obj
