@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using AccesoDatos.Interfaces;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Modelos;
 using Seguridad.Interfaces;
@@ -15,9 +16,11 @@ namespace Seguridad.Clases
     public class Autenticacion : IAutenticacion
     {
         private readonly IConfiguration configuracion;
-        public Autenticacion (IConfiguration config) 
+        private readonly IDatosAutenticacion datosAutenticacion;
+        public Autenticacion (IConfiguration config, IDatosAutenticacion _datosAutenticacion ) 
         {
             configuracion = config;
+            datosAutenticacion = _datosAutenticacion;
         }
         // COMPROBAMOS SI EL USUARIO EXISTE EN LA BASE DE DATOS 
         public InformacionUsuario AutenticarUsuarioAsync(UsuarioLogin usuario)
