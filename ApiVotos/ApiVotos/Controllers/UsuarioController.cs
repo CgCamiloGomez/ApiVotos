@@ -21,9 +21,9 @@ namespace ApiVotos.Controllers
 
         [HttpPost]
         [Route("CrearUsuario")]
-        public ActionResult<string> CrearPersona(Usuario usuario) 
+        public ActionResult<string> CrearUsuario(Usuario usuario) 
         {
-            return Ok("");
+            return Ok(new { IdUsuario  = negocioPersona.CrearUsuario(usuario) });
         }
     }
 }

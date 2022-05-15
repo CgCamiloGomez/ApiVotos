@@ -43,7 +43,7 @@ namespace AccesoDatos.Clases
             using (SqlConnection conn = new SqlConnection(CadenaConexion))
             {
                 SqlCommand command = new SqlCommand();
-                command = new SqlCommand("pa_InsertarPersona", conn);
+                command = new SqlCommand("pa_InsertarUsuario", conn);
                 command.CommandType = System.Data.CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@IdPersona", usuario.IdPersona);
                 command.Parameters.AddWithValue("@IdRol", usuario.IdRol);
@@ -56,5 +56,25 @@ namespace AccesoDatos.Clases
                 return Convert.ToInt32(IdUsuario);
             }
         }
+
+        public long CrearCandidato(Candidato candidato)
+        {
+            using (SqlConnection conn = new SqlConnection(CadenaConexion))
+            {
+                SqlCommand command = new SqlCommand();
+                command = new SqlCommand("pa_InsertarCandidato", conn);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@IdPartido", candidato.IdPartido);
+                command.Parameters.AddWithValue("@IdEvento", candidato.IdEvento);
+                command.Parameters.AddWithValue("@IdPersona", candidato.IdPersona);
+                command.Parameters.AddWithValue("@FotoCandidato", candidato.FotoCandidato);
+
+                conn.Open();
+                var IdCandidato = command.ExecuteScalar();
+                conn.Close();
+                return Convert.ToInt32(IdCandidato);
+            }
+        }
+
     }
 }
