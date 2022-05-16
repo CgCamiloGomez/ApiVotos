@@ -66,7 +66,7 @@ namespace Seguridad.Clases
                     audience: configuracion["JWT:Audience"],
                     claims: Claims,
                     notBefore: DateTime.UtcNow,
-                    // Exipra a la 24 horas.
+                    // Expira a las 24 horas.
                     expires: DateTime.UtcNow.AddHours(24)
                 );
 

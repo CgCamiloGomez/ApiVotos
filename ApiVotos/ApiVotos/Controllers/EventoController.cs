@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Modelos;
 using Negocio.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -16,6 +18,31 @@ namespace ApiVotos.Controllers
         public EventoController (INegocioEvento _negocioEvento)
         {
             negocioEvento = _negocioEvento;
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("CrearPartido")]
+        public ActionResult<int> CrearPartido(Partido partido) 
+        {
+            return Ok(new { IdPartido = negocioEvento.CrearPartido(partido)});
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("ConsultarPartidos")]
+        public ActionResult<List<Partido>> ConsultarPartidos()
+        {
+            var ltsPartidos = negocioEvento.ConsultarPartidos();
+            if (ltsPartidos.Count() > 0) 
+            {
+                return Ok(ltsPartidos);
+            }
+            else 
+            {
+                return NoContent();
+            }
+            
         }
     }
 }
