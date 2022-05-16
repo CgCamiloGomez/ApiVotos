@@ -16,6 +16,6 @@ namespace Modelos
         public string Ientificacion { get; set; }
         public DateTime FechaNacimiento { get; set; }
         public long IdTipoPersona { get; set; }
-        public long IdRol { get; set; }
+        public int IdRol { get; set; }
     }
 }

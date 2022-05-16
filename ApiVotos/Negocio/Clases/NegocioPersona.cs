@@ -77,7 +77,7 @@ namespace Negocio.Clases
                 {
                     var sourceBytes = Encoding.UTF8.GetBytes(password);
                     var hashBytes = md5Hash.ComputeHash(sourceBytes);
-                    hash = BitConverter.ToString(hashBytes);
+                    hash = BitConverter.ToString(hashBytes).Replace("-", string.Empty);
                 }
             }
             catch (Exception e) 

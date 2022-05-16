@@ -9,6 +9,8 @@ namespace Negocio.Interfaces
 {
     public interface INegocioPersona
     {
-        public long CrearUsuario(Usuario usuario);
+        long CrearUsuario(Usuario usuario);
+
+        string CifrarPassWord(string password);
     }
 }

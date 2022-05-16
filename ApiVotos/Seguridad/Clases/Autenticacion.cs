@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Modelos;
+using Negocio.Interfaces;
 using Seguridad.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,27 +18,28 @@ namespace Seguridad.Clases
     {
         private readonly IConfiguration configuracion;
         private readonly IDatosAutenticacion datosAutenticacion;
-        public Autenticacion (IConfiguration config, IDatosAutenticacion _datosAutenticacion ) 
+        private readonly INegocioPersona negocioPersona;
+        public Autenticacion (IConfiguration config, IDatosAutenticacion _datosAutenticacion, INegocioPersona _negocioPersona) 
         {
             configuracion = config;
             datosAutenticacion = _datosAutenticacion;
+            negocioPersona = _negocioPersona;
         }
         // COMPROBAMOS SI EL USUARIO EXISTE EN LA BASE DE DATOS 
-        public InformacionUsuario AutenticarUsuarioAsync(UsuarioLogin usuario)
+        public InformacionUsuario AutenticarUsuarioAsync(UsuarioLogin usuarioLogin)
         {
-            // AQUÍ LA LÓGICA DE AUTENTICACIÓN //
-            return new InformacionUsuario()
+            InformacionUsuario infoUsuario = null;
+            try 
             {
-                // Id del Usuario en el Sistema de Información (BD)
-                IdUsuario = 1,
-                Nombre = "Nombre Usuario",
-                Apellidos = "Apellidos Usuario",
-                Correo = "email.usuario@dominio.com",
-                IdRol = 1
-            };
-            // Supondremos que el Usuario NO existe en la Base de Datos.
-            // Retornamos NULL.
-            //return null;
+                var hashPassword = negocioPersona.CifrarPassWord(usuarioLogin.PassWord);
+                usuarioLogin.PassWord = hashPassword;
+                infoUsuario = datosAutenticacion.ObtenerInfoUsuarioLogin(usuarioLogin);
+            }
+            catch (Exception e) 
+            {
+                throw new Exception("Ocurrio un error autenticando el usuario");
+            }
+            return infoUsuario;
         }
 
         // GENERAMOS EL TOKEN CON LA INFORMACIÓN DEL USUARIO

@@ -75,6 +75,5 @@ namespace AccesoDatos.Clases
                 return Convert.ToInt32(IdCandidato);
             }
         }
-
     }
 }
