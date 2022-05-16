@@ -20,6 +20,7 @@ namespace ApiVotos
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -46,6 +47,16 @@ namespace ApiVotos
             });
 
             services.AddControllers();
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.AllowAnyMethod()
+                                      .AllowAnyHeader()
+                                      .WithOrigins("*");
+                                  });
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ApiVotos", Version = "v1" });
