@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Modelos;
 using Negocio.Interfaces;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace ApiVotos.Controllers
 {
+    [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
     public class UsuarioController : ControllerBase
