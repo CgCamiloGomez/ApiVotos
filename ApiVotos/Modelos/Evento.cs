@@ -14,5 +14,9 @@ namespace Modelos
         public int IdTipoEveto { get; set; }
         [Required(ErrorMessage = "Campo DescripcionEvento Requerido")]
         public string DescripcionEvento { get; set; }
+        [Required(ErrorMessage = "Campo FechaInicio Requerido")]
+        public DateTime FechaInicio { get; set; }
+        [Required(ErrorMessage = "Campo FechaFin Requerido")]
+        public DateTime FechaFin { get; set; }
     }
 }

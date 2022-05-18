@@ -59,5 +59,58 @@ namespace AccesoDatos.Clases
                 return ltsPartido;
             }
         }
+
+        public long CrearEvento(RequestEvento evento) 
+        {
+            using (SqlConnection conn = new SqlConnection(CadenaConexion))
+            {
+                SqlCommand command = new SqlCommand();
+                command = new SqlCommand("pa_InsertarEvento", conn);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@IdTipoEvento", evento.evento.IdTipoEveto);
+                command.Parameters.AddWithValue("@DescripcionEvento", evento.evento.DescripcionEvento);
+                command.Parameters.AddWithValue("@FechaInicio", evento.evento.FechaInicio);
+                command.Parameters.AddWithValue("@FechaFin", evento.evento.FechaFin);
+
+                conn.Open();
+                var IdEvento = command.ExecuteScalar();
+                conn.Close();
+                return Convert.ToInt64(IdEvento);
+            }
+        }
+
+        public long InsertarCandidatoEvento(long idCandidato, long idEvento)
+        {
+            using (SqlConnection conn = new SqlConnection(CadenaConexion))
+            {
+                SqlCommand command = new SqlCommand();
+                command = new SqlCommand("pa_InsertarCandidatoEvento", conn);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@IdCandidato", idCandidato);
+                command.Parameters.AddWithValue("@IdEvento", idEvento);
+
+                conn.Open();
+                var IdCandidatoEven = command.ExecuteScalar();
+                conn.Close();
+                return Convert.ToInt64(IdCandidatoEven);
+            }
+        }
+
+        public long InsertarUsuarioEvento(long idUsuario, long idEvento)
+        {
+            using (SqlConnection conn = new SqlConnection(CadenaConexion))
+            {
+                SqlCommand command = new SqlCommand();
+                command = new SqlCommand("pa_InsertarUsuarioEvento", conn);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@IdUsuario", idUsuario);
+                command.Parameters.AddWithValue("@IdEvento", idEvento);
+
+                conn.Open();
+                var IdUsuarioEvento = command.ExecuteScalar();
+                conn.Close();
+                return Convert.ToInt64(IdUsuarioEvento);
+            }
+        }
     }
 }

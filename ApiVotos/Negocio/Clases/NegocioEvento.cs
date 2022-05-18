@@ -46,5 +46,22 @@ namespace Negocio.Clases
             }
             return ltsPartidos;
         }
+
+        public long CrearEvento(RequestEvento evento) 
+        {
+            long idEvento = 0;
+            try 
+            {
+                idEvento = iDatosEvento.CrearEvento(evento);
+
+            }
+            catch (Exception e) 
+            { 
+            
+            }
+            
+            return 1;
+        
+        }
     }
 }

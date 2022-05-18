@@ -65,7 +65,6 @@ namespace AccesoDatos.Clases
                 command = new SqlCommand("pa_InsertarCandidato", conn);
                 command.CommandType = System.Data.CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@IdPartido", candidato.IdPartido);
-                command.Parameters.AddWithValue("@IdEvento", candidato.IdEvento);
                 command.Parameters.AddWithValue("@IdPersona", candidato.IdPersona);
                 command.Parameters.AddWithValue("@FotoCandidato", candidato.FotoCandidato);
 

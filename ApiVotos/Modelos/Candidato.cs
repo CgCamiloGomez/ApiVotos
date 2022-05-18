@@ -12,10 +12,9 @@ namespace Modelos
         public long IdCandidato { get; set; }
         [Required(ErrorMessage = "Campo IdPartido Requerido")]
         public int IdPartido { get; set; }
-        [Required(ErrorMessage = "Campo IdEvento Requerido")]
         public long IdEvento { get; set; }
         [Required(ErrorMessage = "Campo FotoCandidato Requerido")]
-        public string FotoCandidato { get; set; }
+        public byte[] FotoCandidato { get; set; }
 
     }
 }

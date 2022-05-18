@@ -12,5 +12,7 @@ namespace AccesoDatos.Interfaces
         int CrearPartido(Partido partido);
 
         List<Partido> ConsultarPartidos();
+
+        long CrearEvento(RequestEvento evento);
     }
 }
