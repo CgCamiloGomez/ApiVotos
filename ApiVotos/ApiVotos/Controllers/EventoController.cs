@@ -45,10 +45,11 @@ namespace ApiVotos.Controllers
         }
         [HttpPost]
         [Authorize]
-        [Route("CrearPartido")]
+        [Route("CrearEvento")]
         public ActionResult<int> CrearEvento(RequestEvento evento)
         {
             return Ok(new { IdPartido = negocioEvento.CrearEvento(evento)});
         }
+
     }
 }
