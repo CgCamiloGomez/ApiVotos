@@ -80,6 +80,8 @@ namespace ApiVotos
             app.UseAuthentication();
 
             app.UseRouting();
+            
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthorization();
 
