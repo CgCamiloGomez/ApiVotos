@@ -48,7 +48,6 @@ namespace AccesoDatos.Clases
                 command.Parameters.AddWithValue("@IdPersona", usuario.IdPersona);
                 command.Parameters.AddWithValue("@IdRol", usuario.IdRol);
                 command.Parameters.AddWithValue("@Password", usuario.PassWord);
-                command.Parameters.AddWithValue("@RegistroVoto", usuario.RegistroVoto);
 
                 conn.Open();
                 var IdUsuario = command.ExecuteScalar();

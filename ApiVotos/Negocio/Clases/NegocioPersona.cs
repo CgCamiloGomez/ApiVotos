@@ -65,7 +65,7 @@ namespace Negocio.Clases
                 Apellidos = candidato.Apellidos,
                 FechaNacimiento = candidato.FechaNacimiento,
                 Correo = candidato.Correo,
-                IdPersona = candidato.IdPersona,
+                IdTipoPersona = candidato.IdTipoPersona,
             };
         }
         public string CifrarPassWord(string password) 
