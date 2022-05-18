@@ -12,5 +12,6 @@ namespace Negocio.Interfaces
         long CrearUsuario(Usuario usuario);
 
         string CifrarPassWord(string password);
+        Persona MapearCamposPersona(Candidato candidato);
     }
 }

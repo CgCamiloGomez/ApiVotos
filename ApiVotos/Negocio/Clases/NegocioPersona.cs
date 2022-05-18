@@ -56,7 +56,7 @@ namespace Negocio.Clases
             };
         }
 
-        private Persona MapearCamposPersona(Candidato candidato)
+        public Persona MapearCamposPersona(Candidato candidato)
         {
             return new Persona
             {

@@ -6,16 +6,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Negocio.Clases
 {
     public class NegocioEvento : INegocioEvento
     {
         internal IDatosEvento iDatosEvento;
+        internal IDatosPersona iDatosPersona;
+        INegocioPersona inegocioPersona;
 
-        public NegocioEvento(IDatosEvento _iDatosEvento)
+        public NegocioEvento(IDatosEvento _iDatosEvento, IDatosPersona _iDatosPersona, INegocioPersona _negocioPersona)
         {
             iDatosEvento = _iDatosEvento;
+            iDatosPersona = _iDatosPersona;
+            inegocioPersona = _negocioPersona;
         }
 
         public int CrearPartido(Partido partido) 
@@ -42,7 +47,6 @@ namespace Negocio.Clases
             catch(Exception e) 
             {
                 throw new Exception("Ocurrio un error consultando los partidos");
-            
             }
             return ltsPartidos;
         }
@@ -50,18 +54,42 @@ namespace Negocio.Clases
         public long CrearEvento(RequestEvento evento) 
         {
             long idEvento = 0;
+
             try 
             {
-                idEvento = iDatosEvento.CrearEvento(evento);
-
+                using (TransactionScope scope = new TransactionScope()) 
+                {
+                    idEvento = iDatosEvento.CrearEvento(evento);
+                    //Inserta la lista de candidatos y personas
+                    foreach (var element in evento.Candidatos)
+                    {
+                        element.IdEvento = idEvento;
+                        if (element.IdCandidato == 0) 
+                        {
+                            var persona = inegocioPersona.MapearCamposPersona(element);
+                            element.IdPersona = iDatosPersona.CrearPersona(persona);
+                            element.IdCandidato = iDatosPersona.CrearCandidato(element);
+                            iDatosEvento.InsertarCandidatoEvento(element.IdCandidato, idEvento);
+                        }
+                        else 
+                        {
+                            iDatosEvento.InsertarCandidatoEvento(element.IdCandidato, idEvento);
+                        }
+                    }
+                    //Inserta los usuarios que pueden votar en el evento creado
+                    foreach (var element in evento.Invitados) 
+                    {
+                        iDatosEvento.InsertarUsuarioEvento(element, idEvento);
+                    }
+                    scope.Complete();
+                }
             }
             catch (Exception e) 
-            { 
-            
+            {
+                throw new Exception("Ocurrio un error creando el evento");
             }
-            
-            return 1;
-        
+            return idEvento;
         }
+
     }
 }

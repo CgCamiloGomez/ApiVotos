@@ -14,5 +14,7 @@ namespace AccesoDatos.Interfaces
         List<Partido> ConsultarPartidos();
 
         long CrearEvento(RequestEvento evento);
+        long InsertarCandidatoEvento(long idCandidato, long idEvento);
+        long InsertarUsuarioEvento(long idUsuario, long idEvento);
     }
 }
