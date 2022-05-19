@@ -73,5 +73,38 @@ namespace AccesoDatos.Clases
                 return Convert.ToInt32(IdCandidato);
             }
         }
+
+        public List<Usuario> ObtenerUsuarios()
+        {
+            List<Usuario> ltsUsuario = new List<Usuario>();
+            Usuario usuario = null;
+            using (SqlConnection conn = new SqlConnection(CadenaConexion))
+            {
+                SqlCommand command = new SqlCommand();
+                command = new SqlCommand("pa_ObtenerUsuarios", conn);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                var reader = command.ExecuteReader();
+                if (reader.HasRows) 
+                {
+                    while (reader.Read()) 
+                    {
+                        usuario = new Usuario
+                        {
+                            IdUsuario = Convert.ToInt64(reader["IdUsuario_USU"]),
+                            IdRol = Convert.ToInt32(reader["IdRol_USU"]),
+                            Nombre = reader["Nombre_PER"].ToString(),
+                            Apellidos = reader["Apellidos_PER"].ToString(),
+                            Identificacion = reader["Identificacion"].ToString(),
+                            FechaNacimiento = Convert.ToDateTime (reader["FechaNacimiento"]),
+                            Correo = reader["Correo_PER"].ToString(),
+                        };
+                        ltsUsuario.Add(usuario);
+                    }
+                }
+                conn.Close();
+                return ltsUsuario;
+            }
+        }
     }
 }

@@ -13,5 +13,7 @@ namespace Negocio.Interfaces
 
         string CifrarPassWord(string password);
         Persona MapearCamposPersona(Candidato candidato);
+
+        List<Usuario> ObtenerUsuarios();
     }
 }

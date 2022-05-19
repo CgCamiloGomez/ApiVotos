@@ -86,5 +86,10 @@ namespace Negocio.Clases
             }
             return hash;
         }
+
+        public List<Usuario> ObtenerUsuarios() 
+        {
+            return  iDatosUsuario.ObtenerUsuarios();
+        }
     }
 }
