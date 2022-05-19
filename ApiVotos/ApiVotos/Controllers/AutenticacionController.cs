@@ -28,7 +28,8 @@ namespace ApiVotos.Controllers
             var usuario = autenticacion.AutenticarUsuarioAsync(usuarioLogin);
             if (usuario != null) 
             {
-                return Ok( new { token = autenticacion.GenerarTokenJWT(usuario) });
+                usuario.Token = autenticacion.GenerarTokenJWT(usuario);
+                return Ok(usuario);
             }
             else 
             {
