@@ -16,6 +16,7 @@ namespace Modelos
         public long IdUsuario { get; set; }
         [Required(ErrorMessage = "Campo IdEvento Requerido")]
         public long IdEvento { get; set; }
+
         [Required(ErrorMessage = "Campo FechaVoto Requerido")]
         public DateTime FechaVoto { get; set; }
     }

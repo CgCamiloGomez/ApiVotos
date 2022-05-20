@@ -13,6 +13,7 @@ namespace Negocio.Clases
     public class NegocioVoto : INegocioVoto
     {
         internal IDatosVoto datosVoto;
+        int UNICO_VOTO = 1;
 
         public NegocioVoto(IDatosVoto _datosVoto) 
         {
@@ -26,6 +27,14 @@ namespace Negocio.Clases
             {
                 using (TransactionScope scope = new TransactionScope()) 
                 {
+                    var idTipoEvento = datosVoto.ObtnerTipoEventoDeEvento(voto.IdEvento);
+                    if (idTipoEvento == UNICO_VOTO) 
+                    {
+                        if (datosVoto.ValidarVotoUsuario(voto.IdUsuario, voto.IdEvento))
+                        {
+                            throw new InvalidOperationException("El usuario ya registro voto en el evento");
+                        }
+                    }
                     idVoto = datosVoto.RegistrarVoto(voto);
                     datosVoto.ActualizarUsuarioEvento(voto.IdUsuario, voto.IdEvento);
                     scope.Complete();

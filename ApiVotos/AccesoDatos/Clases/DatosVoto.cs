@@ -85,5 +85,54 @@ namespace AccesoDatos.Clases
             }
             return ltsVotosEvento;
         }
+
+        public bool ValidarVotoUsuario(long idUsuario, long idEvento) 
+        {
+            bool uSuarioVoto = false;
+            using (SqlConnection conn = new SqlConnection(CadenaConexion))
+            {
+                SqlCommand command = new SqlCommand();
+                command = new SqlCommand("pa_ValidarVotoUsuario", conn);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@IdUsuario", idUsuario);
+                command.Parameters.AddWithValue("@IdEvento", idEvento);
+
+                conn.Open();
+                var reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read()) 
+                    {
+                        uSuarioVoto = Convert.ToBoolean(reader["RegistroVoto_UEV"]);
+                    }
+                }
+                conn.Close();
+            }
+            return uSuarioVoto;
+        }
+
+        public long ObtnerTipoEventoDeEvento(long idEvento)
+        {
+            int idTipoEvento = 0;
+            using (SqlConnection conn = new SqlConnection(CadenaConexion))
+            {
+                SqlCommand command = new SqlCommand();
+                command = new SqlCommand("pa_ObtnerTipoEventoDeEvento", conn);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@IdEvento", idEvento);
+
+                conn.Open();
+                var reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        idTipoEvento = Convert.ToInt32(reader["IdTipoEvento_EVT"]);
+                    }
+                }
+                conn.Close();
+            }
+            return idTipoEvento;
+        }
     }
 }

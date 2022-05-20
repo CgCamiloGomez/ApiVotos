@@ -12,5 +12,7 @@ namespace AccesoDatos.Interfaces
         long RegistrarVoto(Voto voto);
         void ActualizarUsuarioEvento(long idUsuario, long idEvento);
         List<VotosEvento> ObtenerVotosXEvento(long idEvento);
+        bool ValidarVotoUsuario(long idUsuario, long idEvento);
+        long ObtnerTipoEventoDeEvento(long idEvento);
     }
 }
