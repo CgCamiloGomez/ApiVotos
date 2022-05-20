@@ -15,5 +15,6 @@ namespace Negocio.Interfaces
         long CrearEvento(RequestEvento evento);
 
         List<Evento> ObtenerEventosUsuario(long idUsuario, bool esVotante);
+        ResponseEvento ObtenerEventoXId(long idEvento);
     }
 }

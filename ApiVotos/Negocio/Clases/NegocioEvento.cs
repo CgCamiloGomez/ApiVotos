@@ -98,5 +98,26 @@ namespace Negocio.Clases
         {
             return iDatosEvento.ObtenerEventosUsuario(idUsuario, esVotante);
         }
+
+        public ResponseEvento ObtenerEventoXId (long idEvento) 
+        {
+            ResponseEvento responseEvento = new ResponseEvento();
+            try 
+            {
+                var evento = iDatosEvento.ObtenerEventoXId(idEvento);
+                if (evento == null) 
+                {
+                    throw new Exception("No se encontro el evento para el id "+ idEvento);
+                }
+                var ltsCandidatos = iDatosEvento.ObtenerCandidatosXIdEvento(idEvento);
+                responseEvento.evento = evento;
+                responseEvento.Candidatos = ltsCandidatos;
+            }
+            catch (Exception e) 
+            {
+                throw new Exception(e.Message);
+            }
+            return responseEvento;
+        }
     }
 }

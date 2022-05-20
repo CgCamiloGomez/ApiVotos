@@ -18,5 +18,7 @@ namespace AccesoDatos.Interfaces
         public long InsertarUsuarioEvento(long idUsuario, long idEvento, bool esVotante);
 
         List<Evento> ObtenerEventosUsuario(long idUsuario, bool esVotante);
+        Evento ObtenerEventoXId(long idEvento);
+        List<CandidatoEvento> ObtenerCandidatosXIdEvento(long idEvento);
     }
 }

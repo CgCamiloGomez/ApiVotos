@@ -67,5 +67,20 @@ namespace ApiVotos.Controllers
                 return NoContent();
             }
         }
+
+        [HttpGet]
+        [Authorize]
+        [Route("ObtenerEventoXId/{idEvento}")]
+        public ActionResult<ResponseEvento> ObtenerEventoXId(long idEvento)
+        {
+            if (idEvento == 0) 
+            {
+                return BadRequest();
+            }
+            else 
+            {
+                return negocioEvento.ObtenerEventoXId(idEvento);
+            }   
+        }
     }
 }

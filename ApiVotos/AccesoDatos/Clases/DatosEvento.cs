@@ -148,5 +148,71 @@ namespace AccesoDatos.Clases
             }
             return ltsEventos;
         }
+
+
+        public Evento ObtenerEventoXId(long idEvento)
+        {
+            Evento evento = null;
+            using (SqlConnection conn = new SqlConnection(CadenaConexion))
+            {
+                SqlCommand command = new SqlCommand();
+                command = new SqlCommand("pa_ObtenerEventoXId", conn);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@IdEvento", idEvento);
+                
+                conn.Open();
+                var reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        evento = new Evento()
+                        {
+                            IdEvento = Convert.ToInt64(reader["IdEvento_EVT"]),
+                            IdTipoEvento = Convert.ToInt32(reader["IdTipoEvento_EVT"]),
+                            DescripcionEvento = reader["DescripcionEvento_EVT"].ToString(),
+                            FechaInicio = Convert.ToDateTime(reader["FechaInicio_EVT"]),
+                            FechaFin = Convert.ToDateTime(reader["FechaFin_EVT"]),
+                        };
+                    }
+                }
+                conn.Close();
+            }
+            return evento;
+        }
+
+        public List<CandidatoEvento> ObtenerCandidatosXIdEvento(long idEvento)
+        {
+            List<CandidatoEvento> ltsCandidatoEvento = new List<CandidatoEvento>();
+            CandidatoEvento candidatoEvento = null;
+            using (SqlConnection conn = new SqlConnection(CadenaConexion))
+            {
+                SqlCommand command = new SqlCommand();
+                command = new SqlCommand("pa_ObtenerCandidatosXIdEvento", conn);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@IdEvento", idEvento);
+
+                conn.Open();
+                var reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        candidatoEvento = new CandidatoEvento()
+                        {
+                            IdCandidato = Convert.ToInt64(reader["IdCandidato_CAN"]),
+                            Nombre = reader["Nombre_PER"].ToString(),
+                            Apellidos = reader["Apellidos_PER"].ToString(),
+                            IdPartido = Convert.ToInt32(reader["IdPartido_CAN"]),
+                            NombrePardito = reader["NombrePardito_PAR"].ToString(),
+                            FotoCandidato = (byte[])reader["FotoCandidato_CAN"]
+                        };
+                        ltsCandidatoEvento.Add(candidatoEvento);
+                    }
+                }
+                conn.Close();
+            }
+            return ltsCandidatoEvento;
+        }
     }
 }

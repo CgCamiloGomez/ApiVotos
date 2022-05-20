@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Modelos;
 using Negocio.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -16,6 +18,15 @@ namespace ApiVotos.Controllers
         public VotoController (INegocioVoto _negocioVoto)
         {
             negocioVoto = _negocioVoto;
+        }
+
+
+        [HttpPost]
+        [Authorize]
+        [Route("RegistrarVoto")]
+        public ActionResult<long> RegistrarVoto(Voto voto)
+        {
+            return Ok(new { IdVoto = negocioVoto.RegistrarVoto(voto) });
         }
     }
 }
