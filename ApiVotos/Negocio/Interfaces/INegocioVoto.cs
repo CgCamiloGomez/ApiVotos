@@ -10,5 +10,6 @@ namespace Negocio.Interfaces
     public interface INegocioVoto
     {
         long RegistrarVoto(Voto voto);
+        List<VotosEvento> ObtenerVotosXEvento(long idEvento);
     }
 }

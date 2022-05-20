@@ -28,5 +28,20 @@ namespace ApiVotos.Controllers
         {
             return Ok(new { IdVoto = negocioVoto.RegistrarVoto(voto) });
         }
+        [HttpGet]
+        [Authorize]
+        [Route("ObtenerVotosXEvento/{idEvento}")]
+        public ActionResult<List<VotosEvento>> ObtenerVotosXEvento(long idEvento)
+        {
+            var ltsVotos = negocioVoto.ObtenerVotosXEvento(idEvento);
+            if (ltsVotos.Count > 0) 
+            {
+                return Ok(ltsVotos);
+            }
+            else 
+            {
+                return NoContent();
+            }   
+        }
     }
 }

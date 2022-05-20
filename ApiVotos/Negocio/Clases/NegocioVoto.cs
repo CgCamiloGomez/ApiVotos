@@ -37,5 +37,10 @@ namespace Negocio.Clases
             }
             return idVoto;
         }
+
+        public List<VotosEvento> ObtenerVotosXEvento(long idEvento)
+        {
+            return datosVoto.ObtenerVotosXEvento(idEvento);
+        }
     }
 }
