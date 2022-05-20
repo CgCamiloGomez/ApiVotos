@@ -60,6 +60,8 @@ namespace Negocio.Clases
                 using (TransactionScope scope = new TransactionScope()) 
                 {
                     idEvento = iDatosEvento.CrearEvento(evento);
+                    //Inserta al creador del evento
+                    iDatosEvento.InsertarUsuarioEvento(evento.evento.IdUsuario, idEvento, false);
                     //Inserta la lista de candidatos y personas
                     foreach (var element in evento.Candidatos)
                     {
@@ -79,7 +81,7 @@ namespace Negocio.Clases
                     //Inserta los usuarios que pueden votar en el evento creado
                     foreach (var element in evento.Invitados) 
                     {
-                        iDatosEvento.InsertarUsuarioEvento(element, idEvento);
+                        iDatosEvento.InsertarUsuarioEvento(element, idEvento, true);
                     }
                     scope.Complete();
                 }
@@ -91,5 +93,10 @@ namespace Negocio.Clases
             return idEvento;
         }
 
+
+        public List<Evento> ObtenerEventosUsuario(long idUsuario, bool esVotante)
+        {
+            return iDatosEvento.ObtenerEventosUsuario(idUsuario, esVotante);
+        }
     }
 }

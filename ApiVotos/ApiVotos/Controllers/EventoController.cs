@@ -43,6 +43,7 @@ namespace ApiVotos.Controllers
                 return NoContent();
             }
         }
+
         [HttpPost]
         [Authorize]
         [Route("CrearEvento")]
@@ -51,5 +52,20 @@ namespace ApiVotos.Controllers
             return Ok(new { IdEvento = negocioEvento.CrearEvento(evento)});
         }
 
+        [HttpGet]
+        [Authorize]
+        [Route("ObtenerEventosUsuario/{idUsuario}/{esVotante}")]
+        public ActionResult<List<Evento>> ObtenerEventosUsuario(long idUsuario, bool esVotante)
+        {
+            var ltsEventos = negocioEvento.ObtenerEventosUsuario(idUsuario, esVotante);
+            if (ltsEventos.Count() > 0)
+            {
+                return Ok(ltsEventos);
+            }
+            else
+            {
+                return NoContent();
+            }
+        }
     }
 }

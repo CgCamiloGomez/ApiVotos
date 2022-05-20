@@ -67,7 +67,7 @@ namespace AccesoDatos.Clases
                 SqlCommand command = new SqlCommand();
                 command = new SqlCommand("pa_InsertarEvento", conn);
                 command.CommandType = System.Data.CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@IdTipoEvento", evento.evento.IdTipoEveto);
+                command.Parameters.AddWithValue("@IdTipoEvento", evento.evento.IdTipoEvento);
                 command.Parameters.AddWithValue("@DescripcionEvento", evento.evento.DescripcionEvento);
                 command.Parameters.AddWithValue("@FechaInicio", evento.evento.FechaInicio);
                 command.Parameters.AddWithValue("@FechaFin", evento.evento.FechaFin);
@@ -96,7 +96,7 @@ namespace AccesoDatos.Clases
             }
         }
 
-        public long InsertarUsuarioEvento(long idUsuario, long idEvento)
+        public long InsertarUsuarioEvento(long idUsuario, long idEvento, bool esVotante)
         {
             using (SqlConnection conn = new SqlConnection(CadenaConexion))
             {
@@ -105,12 +105,48 @@ namespace AccesoDatos.Clases
                 command.CommandType = System.Data.CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@IdUsuario", idUsuario);
                 command.Parameters.AddWithValue("@IdEvento", idEvento);
+                command.Parameters.AddWithValue("@EsVotante", esVotante);
+                
 
                 conn.Open();
                 var IdUsuarioEvento = command.ExecuteScalar();
                 conn.Close();
                 return Convert.ToInt64(IdUsuarioEvento);
             }
+        }
+
+        public List<Evento> ObtenerEventosUsuario(long idUsuario, bool esVotante) 
+        {
+            List<Evento> ltsEventos = new List<Evento>();
+            Evento evento = null;
+            using (SqlConnection conn = new SqlConnection(CadenaConexion))
+            {
+                SqlCommand command = new SqlCommand();
+                command = new SqlCommand("pa_ObtenerEventosUsuario", conn);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@IdUsuario", idUsuario);
+                command.Parameters.AddWithValue("@EsVotante", esVotante);
+
+                conn.Open();
+                var reader = command.ExecuteReader();
+                if (reader.HasRows) 
+                {
+                    while (reader.Read()) 
+                    {
+                        evento = new Evento()
+                        {
+                            IdEvento = Convert.ToInt64(reader["IdEvento_EVT"]),
+                            IdTipoEvento = Convert.ToInt32(reader["IdTipoEvento_EVT"]),
+                            DescripcionEvento = reader["DescripcionEvento_EVT"].ToString(),
+                            FechaInicio = Convert.ToDateTime( reader["FechaInicio_EVT"]),
+                            FechaFin = Convert.ToDateTime(reader["FechaFin_EVT"]),
+                        };
+                        ltsEventos.Add(evento);
+                    }                
+                }
+                conn.Close();
+            }
+            return ltsEventos;
         }
     }
 }

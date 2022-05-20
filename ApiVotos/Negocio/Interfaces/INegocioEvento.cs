@@ -13,5 +13,7 @@ namespace Negocio.Interfaces
         List<Partido> ConsultarPartidos();
 
         long CrearEvento(RequestEvento evento);
+
+        List<Evento> ObtenerEventosUsuario(long idUsuario, bool esVotante);
     }
 }

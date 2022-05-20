@@ -15,6 +15,8 @@ namespace AccesoDatos.Interfaces
 
         long CrearEvento(RequestEvento evento);
         long InsertarCandidatoEvento(long idCandidato, long idEvento);
-        long InsertarUsuarioEvento(long idUsuario, long idEvento);
+        public long InsertarUsuarioEvento(long idUsuario, long idEvento, bool esVotante);
+
+        List<Evento> ObtenerEventosUsuario(long idUsuario, bool esVotante);
     }
 }
