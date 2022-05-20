@@ -11,7 +11,7 @@ namespace Modelos
     {
         public long IdEvento { get; set; }
         [Required(ErrorMessage = "Campo IdTipoEveto Requerido")]
-        public int IdTipoEveto { get; set; }
+        public int IdTipoEvento { get; set; }
         [Required(ErrorMessage = "Campo DescripcionEvento Requerido")]
         public string DescripcionEvento { get; set; }
         [Required(ErrorMessage = "Campo FechaInicio Requerido")]
